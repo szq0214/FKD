@@ -1,7 +1,7 @@
 ## FKD: A Fast Knowledge Distillation Framework for Visual Recognition
 
 
-Official PyTorch implementation of paper [**A Fast Knowledge Distillation Framework for Visual Recognition**](). Zhiqiang Shen and Eric Xing from CMU and MUZUAI.
+Official PyTorch implementation of paper [**A Fast Knowledge Distillation Framework for Visual Recognition**](https://arxiv.org/abs/2112.01528). Zhiqiang Shen and Eric Xing from CMU and MUZUAI.
 
 <div align=center>
 <img width=60% src="FKD.png"/>
@@ -82,7 +82,7 @@ Please see [MEAL V2](https://github.com/szq0214/MEAL-V2) for the instructions to
 
 ## Self-supervised Representation Learning Using FKD
 
-Please see [SSL-FKD](https://github.com/szq0214/FKD/tree/main/train_SSL) for the instructions to run FKD code for SSL task.
+Please see [FKD-SSL](https://github.com/szq0214/FKD/tree/main/FKD_SSL) for the instructions to run FKD code for SSL task.
 
 ## Citation
 
@@ -90,7 +90,7 @@ Please see [SSL-FKD](https://github.com/szq0214/FKD/tree/main/train_SSL) for the
 	      title={A Fast Knowledge Distillation Framework for Visual Recognition}, 
 	      author={Zhiqiang Shen and Eric Xing},
 	      year={2021},
-	      journal={arXiv preprint arXiv:}
+	      journal={arXiv preprint arXiv:2112.01528}
 	}
 
 ## Contact
