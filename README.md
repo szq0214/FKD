@@ -45,10 +45,10 @@ python train_FKD.py -a resnet50 -e --resume [model path] [imagenet-folder with t
 | Model    | accuracy (Top-1)  |weights  |configurations |
 |:-------:|:--------:|:--------:|:--------:|
 | [`ReLabel ResNet-50`](https://github.com/naver-ai/relabel_imagenet) |  78.9 | -- |  -- |
-| `FKD ResNet-50` |  **79.8** | [link](https://drive.google.com/file/d/1Dj0gZKyWtfSh3Dq70gbIbErJx7siKBsx/view?usp=sharing) |  [Table 10 in paper]() |
+| `FKD ResNet-50` |  **79.8** | [link](https://drive.google.com/file/d/1Dj0gZKyWtfSh3Dq70gbIbErJx7siKBsx/view?usp=sharing) |  [Table 10 in paper](https://arxiv.org/pdf/2112.01528.pdf) |
 | | | |
 | [`ReLabel ResNet-101`](https://github.com/naver-ai/relabel_imagenet)| 80.7  | -- |  -- | 
-| `FKD ResNet-101`| **81.7**  | [link](https://drive.google.com/file/d/13bVpHpTykCaYYXIAbWHa2W2C2tSxZlW5/view?usp=sharing) |  [Table 10 in paper]() |  
+| `FKD ResNet-101`| **81.7**  | [link](https://drive.google.com/file/d/13bVpHpTykCaYYXIAbWHa2W2C2tSxZlW5/view?usp=sharing) |  [Table 10 in paper](https://arxiv.org/pdf/2112.01528.pdf) |  
 
 ### FKD Training on ViT/DeiT and SReT
 
@@ -72,9 +72,9 @@ python train_ViT_FKD.py -a SReT_LT -e --resume [model path] [imagenet-folder wit
 | Model    | FLOPs| #params | accuracy (Top-1) |weights  |configurations |
 |:-------:|:--------:|:--------:|:--------:|:--------:|:--------:|
 | [`DeiT-T-distill`](https://github.com/facebookresearch/deit) | 1.3B  | 5.7M | 74.5  |-- |  -- |
-| `FKD ViT/DeiT-T` | 1.3B  | 5.7M | **75.2**  |[link](https://drive.google.com/file/d/1m33c1wHdCV7ePETO_HvWNaboSd_W4nfC/view?usp=sharing) |  [Table 11 in paper]() |
+| `FKD ViT/DeiT-T` | 1.3B  | 5.7M | **75.2**  |[link](https://drive.google.com/file/d/1m33c1wHdCV7ePETO_HvWNaboSd_W4nfC/view?usp=sharing) |  [Table 11 in paper](https://arxiv.org/pdf/2112.01528.pdf) |
 | [`SReT-LT-distill`](https://github.com/szq0214/SReT)  |  1.2B | 5.0M | 77.7  |-- |  --  |
-| `FKD SReT-LT`    |  1.2B | 5.0M | **78.7**  |[link](https://drive.google.com/file/d/1mmdPXKutHM9Li8xo5nGG6TB0aAXA9PFR/view?usp=sharing) |  [Table 11 in paper]()  |
+| `FKD SReT-LT`    |  1.2B | 5.0M | **78.7**  |[link](https://drive.google.com/file/d/1mmdPXKutHM9Li8xo5nGG6TB0aAXA9PFR/view?usp=sharing) |  [Table 11 in paper](https://arxiv.org/pdf/2112.01528.pdf)  |
 
 ## Fast MEAL V2
 
