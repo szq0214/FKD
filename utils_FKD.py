@@ -12,6 +12,7 @@ from torchvision.transforms import InterpolationMode
 import random
 import numpy as np
 
+
 class Soft_CrossEntropy(loss._Loss):
     def forward(self, model_output, soft_output):
 
@@ -97,7 +98,7 @@ class ImageFolder_FKD(torchvision.datasets.ImageFolder):
 
             label = torch.load(label_path, map_location=torch.device('cpu'))
 
-            coords,flip_status,output = label
+            coords, flip_status, output = label
 
             rand_index = torch.randperm(len(output))#.cuda()
             output_new = []
@@ -108,15 +109,8 @@ class ImageFolder_FKD(torchvision.datasets.ImageFolder):
 
             for i in range(self.num_crops):
                 if self.transform is not None:
-                    try:
-                        output_new.append(output[rand_index[i]])
-                        sample_new = self.transform(sample, coords[rand_index[i]], flip_status[rand_index[i]])
-                    except:
-                        print(path)
-                        print(i)
-                        print(rand_index)
-                        output_new.append(output[0])
-                        sample_new = self.transform(sample, coords[0], flip_status[0])
+                    output_new.append(output[rand_index[i]])
+                    sample_new = self.transform(sample, coords[rand_index[i]], flip_status[rand_index[i]])
                     sample_all.append(sample_new)
                     target_all.append(target)
                 else:
@@ -129,7 +123,6 @@ class ImageFolder_FKD(torchvision.datasets.ImageFolder):
 
 
 def Recover_soft_label(label, label_type, n_classes):
-    
     if label_type == 'hard':
         return torch.zeros(label.size(0), n_classes).scatter_(1, label.view(-1, 1), 1)
     elif label_type == 'smoothing':

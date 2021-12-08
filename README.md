@@ -1,7 +1,7 @@
 ## FKD: A Fast Knowledge Distillation Framework for Visual Recognition
 
 
-Official PyTorch implementation of paper [**A Fast Knowledge Distillation Framework for Visual Recognition**](https://arxiv.org/abs/2112.01528). Zhiqiang Shen and Eric Xing from CMU and MUZUAI.
+Official PyTorch implementation of paper [**A Fast Knowledge Distillation Framework for Visual Recognition**](https://arxiv.org/abs/2112.01528). Zhiqiang Shen and Eric Xing from CMU and MBZUAI.
 
 <div align=center>
 <img width=60% src="FKD.png"/>
