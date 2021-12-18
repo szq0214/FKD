@@ -45,7 +45,7 @@ python train_FKD.py -a resnet50 -e --resume [model path] [imagenet-folder with t
 | Model    | accuracy (Top-1)  |weights  |configurations |
 |:-------:|:--------:|:--------:|:--------:|
 | [`ReLabel ResNet-50`](https://github.com/naver-ai/relabel_imagenet) |  78.9 | -- |  -- |
-| `FKD ResNet-50` |  **79.8** | [link](https://drive.google.com/file/d/1Dj0gZKyWtfSh3Dq70gbIbErJx7siKBsx/view?usp=sharing) |  [Table 10 in paper](https://arxiv.org/pdf/2112.01528.pdf) |
+| `FKD ResNet-50` |  **79.8** | [link](https://drive.google.com/file/d/1s6Tx5xmXnAseMZJBwaa4bnuvzZZGjMdk/view?usp=sharing) |  [Table 10 in paper](https://arxiv.org/pdf/2112.01528.pdf) |
 | | | |
 | [`ReLabel ResNet-101`](https://github.com/naver-ai/relabel_imagenet)| 80.7  | -- |  -- | 
 | `FKD ResNet-101`| **81.7**  | [link](https://drive.google.com/file/d/13bVpHpTykCaYYXIAbWHa2W2C2tSxZlW5/view?usp=sharing) |  [Table 10 in paper](https://arxiv.org/pdf/2112.01528.pdf) |  
