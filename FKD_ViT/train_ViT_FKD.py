@@ -275,7 +275,6 @@ def main_worker(gpu, ngpus_per_node, args):
         root=traindir,
         transform=Compose_FKD(transforms=[
             RandomResizedCrop_FKD(size=224,
-                                  scale=(0.08, 1),
                                   interpolation='bilinear'), 
             RandomHorizontalFlip_FKD(),
             transforms.ToTensor(),
@@ -287,7 +286,6 @@ def main_worker(gpu, ngpus_per_node, args):
         root=traindir,
         transform=Compose_FKD(transforms=[
             RandomResizedCrop_FKD(size=224,
-                                  scale=(0.08, 1),
                                   interpolation='bilinear'), 
             RandomHorizontalFlip_FKD(),
             transforms.ToTensor(),
@@ -321,8 +319,8 @@ def main_worker(gpu, ngpus_per_node, args):
         validate(val_loader, model, criterion_ce, args)
         return
 
-    # for warmup on every epoch
-    if args.start_epoch == 0:
+    # warmup with single crop, "=" is used to let start_epoch to be 0 for the corner case.
+    if args.start_epoch <= args.warmup_epochs:
         for epoch in range(args.start_epoch, args.warmup_epochs):
             if args.distributed:
                 train_sampler.set_epoch(epoch)
@@ -346,6 +344,7 @@ def main_worker(gpu, ngpus_per_node, args):
                     'best_acc1': best_acc1,
                     'optimizer' : optimizer.state_dict(),
                 }, is_best, filename=args.save_checkpoint_path+'/checkpoint.pth.tar')
+        args.start_epoch == 0 # for resume
     else:
         args.warmup_epochs = args.num_crops - 1  # for resume
 

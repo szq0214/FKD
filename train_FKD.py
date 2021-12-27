@@ -236,7 +236,6 @@ def main_worker(gpu, ngpus_per_node, args):
         root=traindir,
         transform=Compose_FKD(transforms=[
             RandomResizedCrop_FKD(size=224,
-                            scale=(0.08, 1),
                             interpolation='bilinear'), 
             RandomHorizontalFlip_FKD(),
             transforms.ToTensor(),
@@ -248,7 +247,6 @@ def main_worker(gpu, ngpus_per_node, args):
         root=traindir,
         transform=Compose_FKD(transforms=[
             RandomResizedCrop_FKD(size=224,
-                            scale=(0.08, 1),
                             interpolation='bilinear'), 
             RandomHorizontalFlip_FKD(),
             transforms.ToTensor(),
@@ -281,6 +279,10 @@ def main_worker(gpu, ngpus_per_node, args):
     if args.evaluate:
         validate(val_loader, model, criterion_ce, args)
         return
+
+    # for resume
+    if args.start_epoch !=0 and args.start_epoch < (args.epochs-args.num_crops):
+        args.start_epoch = args.start_epoch + args.num_crops - 1
 
     for epoch in range(args.start_epoch, args.epochs, args.num_crops):
         if args.distributed:
