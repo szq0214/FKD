@@ -344,7 +344,7 @@ def main_worker(gpu, ngpus_per_node, args):
                     'best_acc1': best_acc1,
                     'optimizer' : optimizer.state_dict(),
                 }, is_best, filename=args.save_checkpoint_path+'/checkpoint.pth.tar')
-        args.start_epoch == 0 # for resume
+        args.start_epoch = 0 # for resume
     else:
         args.warmup_epochs = args.num_crops - 1  # for resume
 
