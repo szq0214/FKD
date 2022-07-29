@@ -93,8 +93,8 @@ The training speed of each epoch is tested on CIAI cluster at MBZUAI with 8 NVID
 
 | Method |  Network  | FLOPs | accuracy (Top-1)  |weights  |
 |:-------:|:--------:|:--------:|:--------:|:--------:|
-| [`FBNet`](https://arxiv.org/abs/1812.03443)| FBNet-C | 375M | 75.12% | -- | 
-| `FKD`| FBNet-C | 375M | **77.13%<sup>+2.01%</sup>** | [link](https://drive.google.com/file/d/1s2pnIedXgwYAPpY2GBT3OC24ZP-0vfWe/view?usp=sharing) |  
+| [`FBNet`](https://arxiv.org/abs/1812.03443)| FBNet-c100 | 375M | 75.12% | -- | 
+| `FKD`| FBNet-c100 | 375M | **77.13%<sup>+2.01%</sup>** | [link](https://drive.google.com/file/d/1s2pnIedXgwYAPpY2GBT3OC24ZP-0vfWe/view?usp=sharing) |  
 | | | |
 | [`EfficientNetv2`](https://arxiv.org/abs/2104.00298)| EfficientNetv2-B0 | 700M | 78.35% | -- | 
 | `FKD`| EfficientNetv2-B0 | 700M | **79.94%<sup>+1.59%</sup>** | [link](https://drive.google.com/file/d/1qL21XOnTRWt6CvZLvUY5IpULISESEfZm/view?usp=sharing) |  
@@ -149,9 +149,9 @@ python train_ViT_FKD.py -a SReT_LT -e --resume [model path] [imagenet-folder wit
 | Model    | FLOPs| #params | accuracy (Top-1) |weights  |configurations |
 |:-------:|:--------:|:--------:|:--------:|:--------:|:--------:|
 | [`DeiT-T-distill`](https://github.com/facebookresearch/deit) | 1.3B  | 5.7M | 74.5  |-- |  -- |
-| `FKD ViT/DeiT-T` | 1.3B  | 5.7M | **75.2**  |[link](https://drive.google.com/file/d/1m33c1wHdCV7ePETO_HvWNaboSd_W4nfC/view?usp=sharing) |  [Table 11 in paper](https://arxiv.org/pdf/2112.01528.pdf) |
+| `FKD ViT/DeiT-T` | 1.3B  | 5.7M | **75.2**  |[link](https://drive.google.com/file/d/1m33c1wHdCV7ePETO_HvWNaboSd_W4nfC/view?usp=sharing) |  [Table 13 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf) |
 | [`SReT-LT-distill`](https://github.com/szq0214/SReT)  |  1.2B | 5.0M | 77.7  |-- |  --  |
-| `FKD SReT-LT`    |  1.2B | 5.0M | **78.7**  |[link](https://drive.google.com/file/d/1mmdPXKutHM9Li8xo5nGG6TB0aAXA9PFR/view?usp=sharing) |  [Table 11 in paper](https://arxiv.org/pdf/2112.01528.pdf)  |
+| `FKD SReT-LT`    |  1.2B | 5.0M | **78.7**  |[link](https://drive.google.com/file/d/1mmdPXKutHM9Li8xo5nGG6TB0aAXA9PFR/view?usp=sharing) |  [Table 13 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)  |
 
 ## Fast MEAL V2
 

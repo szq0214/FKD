@@ -34,8 +34,8 @@ python train_ViT_FKD.py -a SReT_LT -e --resume [model path] [imagenet-folder wit
 | Model    | FLOPs| #params | accuracy (Top-1) |weights  |configurations |
 |:-------:|:--------:|:--------:|:--------:|:--------:|:--------:|
 | [`DeiT-T-distill`](https://github.com/facebookresearch/deit) | 1.3B  | 5.7M | 74.5  |-- |  -- |
-| `FKD ViT/DeiT-T` | 1.3B  | 5.7M | **75.2**  |[link](https://drive.google.com/file/d/1m33c1wHdCV7ePETO_HvWNaboSd_W4nfC/view?usp=sharing) |  [Table 11 of paper](https://arxiv.org/pdf/2112.01528.pdf) |
+| `FKD ViT/DeiT-T` | 1.3B  | 5.7M | **75.2**  |[link](https://drive.google.com/file/d/1m33c1wHdCV7ePETO_HvWNaboSd_W4nfC/view?usp=sharing) |  [Table 13 of paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf) |
 | [`SReT-LT-distill`](https://github.com/szq0214/SReT)  |  1.2B | 5.0M | 77.7  |-- |  --  |
-| `FKD SReT-LT`    |  1.2B | 5.0M | **78.7**  |[link](https://drive.google.com/file/d/1mmdPXKutHM9Li8xo5nGG6TB0aAXA9PFR/view?usp=sharing) |  [Table 11 of paper](https://arxiv.org/pdf/2112.01528.pdf)  |
+| `FKD SReT-LT`    |  1.2B | 5.0M | **78.7**  |[link](https://drive.google.com/file/d/1mmdPXKutHM9Li8xo5nGG6TB0aAXA9PFR/view?usp=sharing) |  [Table 13 of paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)  |
 
 
