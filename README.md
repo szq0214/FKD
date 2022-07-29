@@ -66,7 +66,7 @@ python train_FKD.py -a resnet50 -e --resume [model path] [imagenet-folder with t
 
 ### Training Speed Comparison
 
-The training speed of each epoch is tested on CIAI cluster at MBZUAI with 8 NVIDIA V100 GPUs. The batch size is 1024 for all three methods: **(i)** regular/vanilla classification framework, **(ii)** Relabel and **(iii)** FKD. For `Vanilla` and `ReLabel`, we use the average of 10 epochs after the speed is stable. For FKD, we perform `num_crops = 4` to calculate the average of (4$\times$10) epochs, note that using 8 will give faster training speed. All other settings are the same for the comparison.
+The training speed of each epoch is tested on CIAI cluster at MBZUAI with 8 NVIDIA V100 GPUs. The batch size is 1024 for all three methods: **(i)** regular/vanilla classification framework, **(ii)** Relabel and **(iii)** FKD. For `Vanilla` and `ReLabel`, we use the average of 10 epochs after the speed is stable. For FKD, we perform `num_crops = 4` to calculate the average of (4 $\times$ 10) epochs, note that using 8 will give faster training speed. All other settings are the same for the comparison.
 
 | Method |  Network  | Training time per-epoch |
 |:-------:|:--------:|:--------:|
@@ -79,13 +79,13 @@ The training speed of each epoch is tested on CIAI cluster at MBZUAI with 8 NVID
 | Method |  Network  | accuracy (Top-1)  |weights  |configurations |
 |:-------:|:--------:|:--------:|:--------:|:--------:|
 | [`ReLabel`](https://github.com/naver-ai/relabel_imagenet) | ResNet-50 | 78.9 | -- |  -- |
-| `FKD`| ResNet-50 |  **80.1****<sup>+1.2%</sup>** | [link](https://drive.google.com/file/d/1qQK3kae4pXBZOldegnZqw7j_aJWtbPgV/view?usp=sharing) | same as ReLabel while initial lr=$0.1\times$$batch size \over 512$ |
+| `FKD`| ResNet-50 |  **80.1<sup>+1.2%</sup>** | [link](https://drive.google.com/file/d/1qQK3kae4pXBZOldegnZqw7j_aJWtbPgV/view?usp=sharing) | same as ReLabel while initial lr = 0.1 $\times$ $batch size \over 512$ |
 | | | |
 | `FKD`<sub>(Plain)</sub>| ResNet-50 |  **79.8** | [link](https://drive.google.com/file/d/1s6Tx5xmXnAseMZJBwaa4bnuvzZZGjMdk/view?usp=sharing) |  [Table 12 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)<br><sub>(w/o warmup&colorJ )</sub>  |
 | `FKD`<sub>(AdamW)</sub> | ResNet-50 | **80.2** | [link](https://drive.google.com/file/d/16rCk2LOnmw693JwxBgixKxffXdls3H6c/view?usp=sharing) |  [Table 13 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)<br><sub>(same as our settings on ViT and SReT)</sub> |
 | | | |
 | [`ReLabel`](https://github.com/naver-ai/relabel_imagenet) | ResNet-101 | 80.7  | -- |  -- | 
-| `FKD` | ResNet-101 | **81.9****<sup>+1.2%</sup>** | [link](TBA) |  [Table 12 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)  |
+| `FKD` | ResNet-101 | **81.9<sup>+1.2%</sup>** | [link](TBA) |  [Table 12 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)  |
 | | | |
 | `FKD`<sub>(Plain)</sub>| ResNet-101 | **81.7**  | [link](https://drive.google.com/file/d/13bVpHpTykCaYYXIAbWHa2W2C2tSxZlW5/view?usp=sharing) |  [Table 12 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)<br><sub>(w/o warmup&colorJ )</sub>  |  
 
@@ -94,10 +94,10 @@ The training speed of each epoch is tested on CIAI cluster at MBZUAI with 8 NVID
 | Method |  Network  | FLOPs | accuracy (Top-1)  |weights  |
 |:-------:|:--------:|:--------:|:--------:|:--------:|
 | [`FBNet`](https://arxiv.org/abs/1812.03443)| FBNet-C | 375M | 75.12% | -- | 
-| `FKD`| FBNet-C | 375M | **77.13%****<sup>+2.01%</sup>** | [link](https://drive.google.com/file/d/1s2pnIedXgwYAPpY2GBT3OC24ZP-0vfWe/view?usp=sharing) |  
+| `FKD`| FBNet-C | 375M | **77.13%<sup>+2.01%</sup>** | [link](https://drive.google.com/file/d/1s2pnIedXgwYAPpY2GBT3OC24ZP-0vfWe/view?usp=sharing) |  
 | | | |
 | [`EfficientNetv2`](https://arxiv.org/abs/2104.00298)| EfficientNetv2-B0 | 700M | 78.35% | -- | 
-| `FKD`| EfficientNetv2-B0 | 700M | **79.94%****<sup>+1.59%</sup>** | [link](https://drive.google.com/file/d/1qL21XOnTRWt6CvZLvUY5IpULISESEfZm/view?usp=sharing) |  
+| `FKD`| EfficientNetv2-B0 | 700M | **79.94%<sup>+1.59%</sup>** | [link](https://drive.google.com/file/d/1qL21XOnTRWt6CvZLvUY5IpULISESEfZm/view?usp=sharing) |  
 
 The training protocol is the same as we used for ViT/SReT:
 
