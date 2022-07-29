@@ -3,7 +3,6 @@ import torch
 import torch.distributed
 import torch.nn as nn
 import torchvision
-from torchvision.ops import roi_align
 from torchvision.transforms import functional as t_F
 from torch.nn import functional as F
 from torchvision.datasets.folder import ImageFolder
@@ -101,55 +100,69 @@ class ImageFolder_FKD(torchvision.datasets.ImageFolder):
             coords, flip_status, output = label
 
             rand_index = torch.randperm(len(output))#.cuda()
-            output_new = []
+            soft_target = []
 
             sample = self.loader(path)
             sample_all = [] 
-            target_all = []
+            hard_target = []
 
             for i in range(self.num_crops):
                 if self.transform is not None:
-                    output_new.append(output[rand_index[i]])
-                    sample_new = self.transform(sample, coords[rand_index[i]], flip_status[rand_index[i]])
-                    sample_all.append(sample_new)
-                    target_all.append(target)
+                    soft_target.append(output[rand_index[i]])
+                    sample_trans = self.transform(sample, coords[rand_index[i]], flip_status[rand_index[i]])
+                    sample_all.append(sample_trans)
+                    hard_target.append(target)
                 else:
                     coords = None
                     flip_status = None
                 if self.target_transform is not None:
                     target = self.target_transform(target)
 
-            return sample_all, target_all, output_new
+            return sample_all, hard_target, soft_target
 
 
 def Recover_soft_label(label, label_type, n_classes):
+
     if label_type == 'hard':
+
         return torch.zeros(label.size(0), n_classes).scatter_(1, label.view(-1, 1), 1)
+
     elif label_type == 'smoothing':
+
         index = label[:,0].to(dtype=int)
         value = label[:,1]
         minor_value = (torch.ones_like(value) - value)/(n_classes-1)
         minor_value = minor_value.reshape(-1,1).repeat_interleave(n_classes, dim=1)
         soft_label = (minor_value * torch.ones(index.size(0), n_classes)).scatter_(1, index.view(-1, 1), value.view(-1, 1))
+
         return soft_label
+
     elif label_type == 'marginal_smoothing_k5':
+
         index = label[:,0,:].to(dtype=int)
         value = label[:,1,:]
         minor_value = (torch.ones(label.size(0),1) - torch.sum(value, dim=1, keepdim=True))/(n_classes-5)
         minor_value = minor_value.reshape(-1,1).repeat_interleave(n_classes, dim=1)
         soft_label = (minor_value * torch.ones(index.size(0), n_classes)).scatter_(1, index, value)
+
         return soft_label
+
     elif label_type == 'marginal_renorm':
+
         index = label[:,0,:].to(dtype=int)
         value = label[:,1,:]
         soft_label = torch.zeros(index.size(0), n_classes).scatter_(1, index, value)
         soft_label = F.normalize(soft_label, p=1.0, dim=1, eps=1e-12)
+
         return soft_label
+
     elif label_type == 'marginal_smoothing_k10':
+        
         index = label[:,0,:].to(dtype=int)
         value = label[:,1,:]
         minor_value = (torch.ones(label.size(0),1) - torch.sum(value, dim=1, keepdim=True))/(n_classes-10)
         minor_value = minor_value.reshape(-1,1).repeat_interleave(n_classes, dim=1)
         soft_label = (minor_value * torch.ones(index.size(0), n_classes)).scatter_(1, index, value)
+
         return soft_label
 

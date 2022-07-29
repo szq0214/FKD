@@ -3,7 +3,7 @@
 
 - Install PyTorch and ImageNet dataset following the [official PyTorch ImageNet training code](https://github.com/pytorch/examples/tree/master/imagenet). This repo has minimal modifications on that code. 
 
-- Download our soft label. We provide multiple types of [soft labels](http://zhiqiangshen.com/projects/FKD/index.html), and we recommend to use [Marginal Smoothing Top-5 (500-crop)](https://drive.google.com/file/d/14leI6xGfnyxHPsBxo0PpCmOq71gWt008/view?usp=sharing).
+- Download our soft label and unzip it. We provide multiple types of [soft labels](http://zhiqiangshen.com/projects/FKD/index.html), and we recommend to use [Marginal Smoothing Top-5 (500-crop)](https://drive.google.com/file/d/14leI6xGfnyxHPsBxo0PpCmOq71gWt008/view?usp=sharing).
 
 
 ## FKD Training on ViT/DeiT and SReT
@@ -11,7 +11,14 @@
 To train a ViT model, run `train_ViT_FKD.py` with the desired model architecture and the path to the soft label and ImageNet dataset:
 
 ```
-python train_ViT_FKD.py -a SReT_LT --lr 0.002 --wd 0.05 --num_crops 4 -b 1024 --cos --softlabel_path [soft label path] [imagenet-folder with train and val folders]
+python train_ViT_FKD.py \
+--dist-url 'tcp://127.0.0.1:10001' \
+--dist-backend 'nccl' \
+--multiprocessing-distributed --world-size 1 --rank 0 \
+-a SReT_LT --lr 0.002 --wd 0.05 \
+--num_crops 4 -b 1024 --cos \
+--softlabel_path [soft label path] \
+[imagenet-folder with train and val folders]
 ```
 
 For the instructions of `SReT_LT` model, please refer to [SReT](https://github.com/szq0214/SReT) for details.
