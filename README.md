@@ -1,7 +1,7 @@
-## FKD: A Fast Knowledge Distillation Framework for Visual Recognition
+## 🚀 FKD: A Fast Knowledge Distillation Framework for Visual Recognition
 
 
-Official PyTorch implementation of paper [**A Fast Knowledge Distillation Framework for Visual Recognition**](https://arxiv.org/abs/2112.01528) (ECCV 2022, [ECCV paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf), [arXiv](https://arxiv.org/abs/2112.01528)), Zhiqiang Shen and Eric Xing.
+Official PyTorch implementation of paper [**A Fast Knowledge Distillation Framework for Visual Recognition**](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf) (ECCV 2022, [ECCV paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf), [arXiv](https://arxiv.org/abs/2112.01528)), Zhiqiang Shen and Eric Xing.
 
 
 <div align=center>
@@ -10,7 +10,9 @@ Official PyTorch implementation of paper [**A Fast Knowledge Distillation Framew
 
 ### Abstract
 
-Knowledge Distillation (KD) has been recognized as a useful tool in many visual tasks, such as the **supervised classification** and **self-supervised representation learning**, while the main drawback of a vanilla KD framework lies in its mechanism that most of the computational overhead is consumed on forwarding through the giant teacher networks, which makes the whole learning procedure in a low-efficient and costly manner. In this work, we propose a Fast Knowledge Distillation (FKD) framework that simulates the distillation training phase and generates soft labels following the multi-crop KD procedure, meanwhile enjoying the faster training speed than ReLabel as we have no post-processes like RoI align and softmax operations. Our FKD is even more efficient than the conventional classification framework when employing multi-crop in the same image for data loading. We achieve 79.8% using ResNet-50 on ImageNet-1K, outperforming ReLabel by 1.0%+ while being faster. We also demonstrate the efficiency advantage of FKD on the self-supervised learning task.
+Knowledge Distillation (KD) has been recognized as a useful tool in many visual tasks, such as the **supervised classification** and **self-supervised representation learning**. While the main drawback of a vanilla KD framework lies in its mechanism that most of the computational overhead is consumed on forwarding through the giant teacher networks, which makes the whole learning procedure a low-efficient and costly manner. 
+
+**🚀 Fast Knowledge Distillation (FKD)** is a novel framework that addresses the low-efficiency drawback, simulates the distillation training phase, and generates soft labels following the multi-crop KD procedure, meanwhile enjoying a faster training speed than other methods. FKD is even more efficient than the conventional classification framework when employing multi-crop in the same image for data loading. It achieves **80.1%** (SGD) and **80.5%** (AdamW) using ResNet-50 on ImageNet-1K with plain training settings. This work also demonstrates the efficiency advantage of FKD on the self-supervised learning task.
 
 ## Citation
 
@@ -21,6 +23,12 @@ Knowledge Distillation (KD) has been recognized as a useful tool in many visual 
 	      journal={arXiv preprint arXiv:2112.01528}
 	}
 
+## What's New
+* Includes [code of soft label generation](FKD_SLG) for customization. We will also set up a [soft label zoo and baselines](FKD_SLG) with multiple soft labels from various teachers. 
+* FKD with AdamW on ResNet-50 achieves **80.5%** using plain training scheme. Pre-trained model is available [here](https://drive.google.com/file/d/14HgpE-9SMOFUN3cb7gT9OjURqq7s7q2_/view?usp=sharing).
+
+
+
 ## Supervised Training
 
 ### Preparation
@@ -28,6 +36,8 @@ Knowledge Distillation (KD) has been recognized as a useful tool in many visual 
 - Install PyTorch and ImageNet dataset following the [official PyTorch ImageNet training code](https://github.com/pytorch/examples/tree/master/imagenet). This repo has minimal modifications on that code. 
 
 - Download our soft label and unzip it. We provide multiple types of [soft labels](http://zhiqiangshen.com/projects/FKD/index.html), and we recommend to use [Marginal Smoothing Top-5 (500-crop)](https://drive.google.com/file/d/14leI6xGfnyxHPsBxo0PpCmOq71gWt008/view?usp=sharing). 
+
+- [Optional] Generate customized soft labels using [./FKD_SLG](FKD_SLG).
 
 
 ### FKD Training on CNNs
@@ -41,7 +51,7 @@ python train_FKD.py -a resnet50 --lr 0.1 --num_crops 4 -b 1024 --cos --softlabel
 
 For `--softlabel_path`, simply use format as `./FKD_soft_label_500_crops_marginal_smoothing_k_5`.
 
-Multi-processing distributed training on single node with multiple GPUs:
+Multi-processing distributed training on a single node with multiple GPUs:
 
 ```
 python train_FKD.py \
@@ -66,7 +76,7 @@ python train_FKD.py -a resnet50 -e --resume [model path] [imagenet-folder with t
 
 ### Training Speed Comparison
 
-The training speed of each epoch is tested on CIAI cluster at MBZUAI with 8 NVIDIA V100 GPUs. The batch size is 1024 for all three methods: **(i)** regular/vanilla classification framework, **(ii)** Relabel and **(iii)** FKD. For `Vanilla` and `ReLabel`, we use the average of 10 epochs after the speed is stable. For FKD, we perform `num_crops = 4` to calculate the average of (4 $\times$ 10) epochs, note that using 8 will give faster training speed. All other settings are the same for the comparison.
+The training speed of each epoch is tested on HPC/CIAI cluster at MBZUAI with 8 NVIDIA V100 GPUs. The batch size is 1024 for all three methods: **(i)** regular/vanilla classification framework, **(ii)** Relabel and **(iii)** FKD. For `Vanilla` and `ReLabel`, we use the average of 10 epochs after the speed is stable. For FKD, we perform `num_crops = 4` to calculate the average of (4 $\times$ 10) epochs, note that using 8 will give faster training speed. All other settings are the same for the comparison.
 
 | Method |  Network  | Training time per-epoch |
 |:-------:|:--------:|:--------:|
@@ -82,7 +92,7 @@ The training speed of each epoch is tested on CIAI cluster at MBZUAI with 8 NVID
 | `FKD`| ResNet-50 |  **80.1<sup>+1.2%</sup>** | [link](https://drive.google.com/file/d/1qQK3kae4pXBZOldegnZqw7j_aJWtbPgV/view?usp=sharing) | same as ReLabel while initial lr = 0.1 $\times$ $batch size \over 512$ |
 | | | |
 | `FKD`<sub>(Plain)</sub>| ResNet-50 |  **79.8** | [link](https://drive.google.com/file/d/1s6Tx5xmXnAseMZJBwaa4bnuvzZZGjMdk/view?usp=sharing) |  [Table 12 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)<br><sub>(w/o warmup&colorJ )</sub>  |
-| `FKD`<sub>(AdamW)</sub> | ResNet-50 | **80.2** | [link](https://drive.google.com/file/d/16rCk2LOnmw693JwxBgixKxffXdls3H6c/view?usp=sharing) |  [Table 13 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)<br><sub>(same as our settings on ViT and SReT)</sub> |
+| `FKD`<sub>(AdamW)</sub> | ResNet-50 | **80.5** | [link](https://drive.google.com/file/d/14HgpE-9SMOFUN3cb7gT9OjURqq7s7q2_/view?usp=sharing) |  [Table 13 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)<br><sub>(same as our settings on ViT and SReT)</sub> |
 | | | |
 | [`ReLabel`](https://github.com/naver-ai/relabel_imagenet) | ResNet-101 | 80.7  | -- |  -- | 
 | `FKD` | ResNet-101 | **81.9<sup>+1.2%</sup>** | [link](TBA) |  [Table 12 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)  |
@@ -111,11 +121,11 @@ python -u train_ViT_FKD.py \
 --multiprocessing-distributed --world-size 1 --rank 0 \
 -a tf_efficientnetv2_b0 \
 --lr 0.002 --wd 0.05 \
---epochs 300 --cos \
---save_checkpoint_path ./FKD_nc_4_224_efficientnetv2_b0 \
--j 32 --num_classes 1000 \
---soft_label_type marginal_smoothing_k5  \
+--epochs 300 --cos -j 32 \
+--num_classes 1000 \
 -b 1024 --num_crops 4 \
+--save_checkpoint_path ./FKD_nc_4_224_efficientnetv2_b0 \
+--soft_label_type marginal_smoothing_k5  \
 --softlabel_path [soft label path] \
 [imagenet-folder with train and val folders]
 
