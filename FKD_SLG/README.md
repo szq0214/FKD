@@ -22,7 +22,7 @@ FKD flags:
 Path flags:
 
 - `--save_path `: specify the folder to save soft labels.
-- `--reference_path`: specify the path to existing soft labels as the reference of crop locations. This is used for soft label ensemble in [FKD MEAL V2](https://github.com/szq0214/MEAL-V2).
+- `--reference_path `: specify the path to existing soft labels as the reference of crop locations. This is used for soft label ensemble in [FKD MEAL V2](https://github.com/szq0214/MEAL-V2).
 - [imagenet-folder with train and val folders]: ImageNet data folder.
 
 Model flag:
@@ -50,7 +50,7 @@ Some important notes:
 
 **Important:** Test your teacher models using `--evaluate` to check whether the accuracy is correct before starting to generate soft labels.
 
-An example of the command line for generating soft labels from `tf_efficientnet_l2_ns_475 `:
+An example of the command line for generating soft labels from `tf_efficientnet_l2_ns_475`:
 
 ```
 python generate_soft_label.py \

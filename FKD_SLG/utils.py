@@ -13,7 +13,11 @@ class RandomResizedCropWithCoords(torchvision.transforms.RandomResizedCrop):
         super(RandomResizedCropWithCoords, self).__init__(**kwargs)
 
     def __call__(self, img, coords):
-        if coords == None:
+        try:
+            reference = (coords.any())
+        except:
+            reference = False
+        if not reference:
             i, j, h, w = self.get_params(img, self.scale, self.ratio)
             coords = (i / img.size[1],
                       j / img.size[0],

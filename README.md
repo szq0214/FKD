@@ -25,7 +25,7 @@ Knowledge Distillation (KD) has been recognized as a useful tool in many visual 
 
 ## What's New
 * Includes [code of soft label generation](FKD_SLG) for customization. We will also set up a [soft label zoo and baselines](FKD_SLG) with multiple soft labels from various teachers. 
-* FKD with AdamW on ResNet-50 achieves **80.5%** using plain training scheme. Pre-trained model is available [here](https://drive.google.com/file/d/14HgpE-9SMOFUN3cb7gT9OjURqq7s7q2_/view?usp=sharing).
+* FKD with AdamW on ResNet-50 achieves **80.5%** using a plain training scheme. Pre-trained model is available [here](https://drive.google.com/file/d/14HgpE-9SMOFUN3cb7gT9OjURqq7s7q2_/view?usp=sharing).
 
 
 
