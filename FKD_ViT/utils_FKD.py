@@ -89,7 +89,6 @@ class ImageFolder_FKD(torchvision.datasets.ImageFolder):
         super(ImageFolder_FKD, self).__init__(**kwargs)
 
     def __getitem__(self, index):
-
             path, target = self.samples[index]
 
             label_path = os.path.join(self.softlabel_path, '/'.join(path.split('/')[-4:]).split('.')[0] + '.tar')
@@ -98,7 +97,7 @@ class ImageFolder_FKD(torchvision.datasets.ImageFolder):
 
             coords, flip_status, output = label
 
-            rand_index = torch.randperm(len(output))#.cuda()
+            rand_index = torch.randperm(len(output))
             soft_target = []
 
             sample = self.loader(path)
@@ -121,13 +120,12 @@ class ImageFolder_FKD(torchvision.datasets.ImageFolder):
 
 
 def Recover_soft_label(label, label_type, n_classes):
-
+    # recover quantized soft label to n_classes dimension.
     if label_type == 'hard':
 
         return torch.zeros(label.size(0), n_classes).scatter_(1, label.view(-1, 1), 1)
 
     elif label_type == 'smoothing':
-
         index = label[:,0].to(dtype=int)
         value = label[:,1]
         minor_value = (torch.ones_like(value) - value)/(n_classes-1)
@@ -137,7 +135,6 @@ def Recover_soft_label(label, label_type, n_classes):
         return soft_label
 
     elif label_type == 'marginal_smoothing_k5':
-
         index = label[:,0,:].to(dtype=int)
         value = label[:,1,:]
         minor_value = (torch.ones(label.size(0),1) - torch.sum(value, dim=1, keepdim=True))/(n_classes-5)
@@ -147,7 +144,6 @@ def Recover_soft_label(label, label_type, n_classes):
         return soft_label
 
     elif label_type == 'marginal_renorm':
-
         index = label[:,0,:].to(dtype=int)
         value = label[:,1,:]
         soft_label = torch.zeros(index.size(0), n_classes).scatter_(1, index, value)
@@ -156,7 +152,6 @@ def Recover_soft_label(label, label_type, n_classes):
         return soft_label
 
     elif label_type == 'marginal_smoothing_k10':
-
         index = label[:,0,:].to(dtype=int)
         value = label[:,1,:]
         minor_value = (torch.ones(label.size(0),1) - torch.sum(value, dim=1, keepdim=True))/(n_classes-10)
