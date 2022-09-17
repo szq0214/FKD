@@ -5,6 +5,7 @@ import shutil
 import time
 import warnings
 import timm
+import numpy as np
 
 import torch
 import torch.nn as nn
@@ -29,30 +30,17 @@ from torchvision.transforms import InterpolationMode
 import torch.multiprocessing
 
 
-parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
+parser = argparse.ArgumentParser(description='FKD Soft Label Generation on ImageNet-1K')
 parser.add_argument('data', metavar='DIR',
                     help='path to dataset')
 parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet18')
 parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
-parser.add_argument('--epochs', default=90, type=int, metavar='N',
-                    help='number of total epochs to run')
-parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
-                    help='manual epoch number (useful on restarts)')
 parser.add_argument('-b', '--batch-size', default=256, type=int,
                     metavar='N',
                     help='mini-batch size (default: 256), this is the total '
                          'batch size of all GPUs on the current node when '
                          'using Data Parallel or Distributed Data Parallel')
-parser.add_argument('--lr', '--learning-rate', default=0.1, type=float,
-                    metavar='LR', help='initial learning rate', dest='lr')
-parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
-                    help='momentum')
-parser.add_argument('--wd', '--weight-decay', default=1e-4, type=float,
-                    metavar='W', help='weight decay (default: 1e-4)',
-                    dest='weight_decay')
-parser.add_argument('-p', '--print-freq', default=10, type=int,
-                    metavar='N', help='print frequency (default: 10)')
 parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
                     help='evaluate model on validation set')
 parser.add_argument('--pretrained', dest='pretrained', action='store_true',
@@ -95,6 +83,8 @@ parser.add_argument('--teacher_source', default='timm', type=str, metavar='SOURC
                     help='source of pre-trained teacher models: pytorch or timm')
 parser.add_argument('--label_type', default='marginal_smoothing_k5', type=str, metavar='TYPE',
                     help='type of generated soft labels')
+parser.add_argument('--use_fp16', dest='use_fp16', action='store_true',
+                    help='save soft labels as `fp16`')
 
 
 sharing_strategy = "file_system"
@@ -287,7 +277,6 @@ def generate_soft_labels(train_loader, model, args):
         coords = torch.stack(coords, dim=0).permute(1,0,2)
 
         for k in range(images.size()[0]):
-            # print(images.size()[0])
             save_path = os.path.join(args.save_path,'/'.join(path[k].split('/')[-4:-1]))
             if not os.path.exists(save_path):
                 os.makedirs(save_path, exist_ok=True)
@@ -329,9 +318,13 @@ def generate_soft_labels(train_loader, model, args):
                     output_all = torch.cat(output_all, dim=0)
                     output_quan = label_quantization(output_all, args.label_type)
 
-                    state = [coords[k].detach().numpy(), flip_status[k].detach().numpy(), output_quan]
+                    if args.use_fp16:
+                        state = [np.float16(coords[k].detach().numpy()), flip_status[k].detach().numpy(), np.float16(output_quan)]
+                    else:
+                        state = [coords[k].detach().numpy(), flip_status[k].detach().numpy(), output_quan]
+
                     torch.save(state, new_filename)
-        
+
         print(i,'/', len(train_loader), i/len(train_loader)*100, "%")
 
 

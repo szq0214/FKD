@@ -18,6 +18,7 @@ FKD flags:
 - `--num_crops `: number of crops in each image to generate soft labels. Default: 500.
 - `--num_seg `: true number of batch-size on GPUs during generating. Make sure `--num_crops` is divisible by `--num_seg`. Default: 50.
 - `--label_type `: type of generated soft labels. Default: `marginal_smoothing_k5`.
+- `--use_fp16`: save soft labels as `fp16` to decrease storage. Default: `False`.
 
 Path flags:
 
@@ -25,7 +26,7 @@ Path flags:
 - `--reference_path `: specify the path to existing soft labels as the reference of crop locations. This is used for soft label ensemble in [FKD MEAL V2](https://github.com/szq0214/MEAL-V2).
 - [imagenet-folder with train and val folders]: ImageNet data folder.
 
-Model flag:
+Model flags:
 
 - `--arch `: specify which model to use as the teacher network.
 - `--input_size `: input size of teacher network.
