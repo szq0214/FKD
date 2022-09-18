@@ -4,7 +4,7 @@ import torch
 import torch.distributed
 import torch.nn as nn
 import torchvision
-from torchvision.transforms import functional as F
+from torchvision.transforms import functional as t_F
 from torchvision.datasets.folder import ImageFolder
 
 
@@ -29,7 +29,7 @@ class RandomResizedCropWithCoords(torchvision.transforms.RandomResizedCrop):
             j = coords[1].item() * img.size[0]
             h = coords[2].item() * img.size[1]
             w = coords[3].item() * img.size[0]
-        return F.resized_crop(img, i, j, h, w, self.size,
+        return t_F.resized_crop(img, i, j, h, w, self.size,
                                  self.interpolation), coords
 
 
@@ -37,16 +37,14 @@ class ComposeWithCoords(torchvision.transforms.Compose):
     def __init__(self, **kwargs):
         super(ComposeWithCoords, self).__init__(**kwargs)
 
-    def __call__(self, img, coords):
-        # coords = None
-        status = None
+    def __call__(self, img, coords, status):
         for t in self.transforms:
             if type(t).__name__ == 'RandomResizedCropWithCoords':
                 img, coords = t(img, coords)
             elif type(t).__name__ == 'RandomCropWithCoords':
                 img, coords = t(img, coords)
             elif type(t).__name__ == 'RandomHorizontalFlipWithRes':
-                img, status = t(img)
+                img, status = t(img, status)
             else:
                 img = t(img)
         return img, status, coords
@@ -66,7 +64,7 @@ class RandomHorizontalFlipWithRes(torch.nn.Module):
         super().__init__()
         self.p = p
 
-    def forward(self, img):
+    def forward(self, img, status):
         """
         Args:
             img (PIL Image or Tensor): Image to be flipped.
@@ -74,11 +72,18 @@ class RandomHorizontalFlipWithRes(torch.nn.Module):
         Returns:
             PIL Image or Tensor: Randomly flipped image.
         """
-        FLIP = False
-        if torch.rand(1) < self.p:
-            FLIP = True
-            return F.hflip(img), FLIP
-        return img, FLIP
+
+        if status is not None:
+            if status == True:
+                return t_F.hflip(img), status
+            else:
+                return img, status
+        else:
+            status = False
+            if torch.rand(1) < self.p:
+                status = True
+                return t_F.hflip(img), status
+            return img, status
 
 
     def __repr__(self):
@@ -102,7 +107,7 @@ class ImageFolder_FKD_GSL(torchvision.datasets.ImageFolder):
             ref_path = os.path.join(self.reference_path,'/'.join(path.split('/')[-4:-1]))
             ref_filename = os.path.join(ref_path,'/'.join(path.split('/')[-1:]).split('.')[0] + '.tar')
             label = torch.load(ref_filename, map_location=torch.device('cpu'))
-            coords_ref, _, _ = label
+            coords_ref, flip_ref, _ = label
         else:
             coords_ref = None
 
@@ -114,9 +119,11 @@ class ImageFolder_FKD_GSL(torchvision.datasets.ImageFolder):
             if self.transform is not None:
                 if coords_ref is not None:
                     coords_ = coords_ref[i]
+                    flip_ = flip_ref[i]
                 else:
                     coords_ = None
-                sample_new, flip_status, coords_single = self.transform(sample, coords_)
+                    flip_ = None
+                sample_new, flip_status, coords_single = self.transform(sample, coords_, flip_)
                 sample_all.append(sample_new)
                 flip_status_all.append(flip_status)
                 coords_all.append(coords_single)
