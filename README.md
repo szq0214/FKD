@@ -49,7 +49,7 @@ To train a model, run `train_FKD.py` with the desired model architecture and the
 python train_FKD.py -a resnet50 --lr 0.1 --num_crops 4 -b 1024 --cos --softlabel_path [soft label path] [imagenet-folder with train and val folders]
 ```
 
-For `--softlabel_path`, simply use format as `./FKD_soft_label_500_crops_marginal_smoothing_k_5`.
+For `--softlabel_path`, use format as `./FKD_soft_label_500_crops_marginal_smoothing_k_5/imagenet`.
 
 Multi-processing distributed training on a single node with multiple GPUs:
 
@@ -60,7 +60,7 @@ python train_FKD.py \
 --multiprocessing-distributed --world-size 1 --rank 0 \
 -a resnet50 --lr 0.1 --num_crops 4 -b 1024 --cos -j 32 \
 --save_checkpoint_path ./FKD_nc_4_res50_plain \
---softlabel_path [soft label path] \
+--softlabel_path [soft label path, e.g., ./FKD_soft_label_500_crops_marginal_smoothing_k_5/imagenet] \
 [imagenet-folder with train and val folders]
 ```
 

@@ -91,7 +91,7 @@ class ImageFolder_FKD(torchvision.datasets.ImageFolder):
     def __getitem__(self, index):
             path, target = self.samples[index]
 
-            label_path = os.path.join(self.softlabel_path, '/'.join(path.split('/')[-4:]).split('.')[0] + '.tar')
+            label_path = os.path.join(self.softlabel_path, '/'.join(path.split('/')[-3:]).split('.')[0] + '.tar')
 
             label = torch.load(label_path, map_location=torch.device('cpu'))
 
