@@ -63,6 +63,7 @@ python generate_soft_label.py \
 --num_crops 500 \
 --num_seg 50 \
 -b 4 \
+--temp 1.0 \
 --label_type marginal_smoothing_k5 \
 --save_path FKD_efficientnet_l2_ns_475_marginal_smoothing_k5 \
 [imagenet-folder with train and val folders]

@@ -17,6 +17,7 @@ python train_ViT_FKD.py \
 --multiprocessing-distributed --world-size 1 --rank 0 \
 -a SReT_LT --lr 0.002 --wd 0.05 \
 --num_crops 4 -b 1024 --cos \
+--temp 1.0 \
 --softlabel_path [soft label path, e.g., ./FKD_soft_label_500_crops_marginal_smoothing_k_5/imagenet] \
 [imagenet-folder with train and val folders]
 ```

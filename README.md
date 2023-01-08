@@ -46,7 +46,7 @@ To train a model, run `train_FKD.py` with the desired model architecture and the
 
 
 ```
-python train_FKD.py -a resnet50 --lr 0.1 --num_crops 4 -b 1024 --cos --softlabel_path [soft label path] [imagenet-folder with train and val folders]
+python train_FKD.py -a resnet50 --lr 0.1 --num_crops 4 -b 1024 --cos --temp 1.0 --softlabel_path [soft label path] [imagenet-folder with train and val folders]
 ```
 
 For `--softlabel_path`, use format as `./FKD_soft_label_500_crops_marginal_smoothing_k_5/imagenet`.
@@ -58,7 +58,8 @@ python train_FKD.py \
 --dist-url 'tcp://127.0.0.1:10001' \
 --dist-backend 'nccl' \
 --multiprocessing-distributed --world-size 1 --rank 0 \
--a resnet50 --lr 0.1 --num_crops 4 -b 1024 --cos -j 32 \
+-a resnet50 --lr 0.1 --num_crops 4 -b 1024 \
+--temp 1.0 --cos -j 32 \
 --save_checkpoint_path ./FKD_nc_4_res50_plain \
 --softlabel_path [soft label path, e.g., ./FKD_soft_label_500_crops_marginal_smoothing_k_5/imagenet] \
 [imagenet-folder with train and val folders]
@@ -122,7 +123,7 @@ python -u train_ViT_FKD.py \
 -a tf_efficientnetv2_b0 \
 --lr 0.002 --wd 0.05 \
 --epochs 300 --cos -j 32 \
---num_classes 1000 \
+--num_classes 1000 --temp 1.0 \
 -b 1024 --num_crops 4 \
 --save_checkpoint_path ./FKD_nc_4_224_efficientnetv2_b0 \
 --soft_label_type marginal_smoothing_k5  \
@@ -141,7 +142,8 @@ python train_ViT_FKD.py \
 --dist-url 'tcp://127.0.0.1:10001' \
 --dist-backend 'nccl' \
 --multiprocessing-distributed --world-size 1 --rank 0 \
--a SReT_LT --lr 0.002 --wd 0.05 --num_crops 4 -b 1024 --cos \
+-a SReT_LT --lr 0.002 --wd 0.05 --num_crops 4 \
+--temp 1.0 -b 1024 --cos \
 --softlabel_path [soft label path] \
 [imagenet-folder with train and val folders]
 ```
