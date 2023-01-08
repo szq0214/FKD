@@ -20,15 +20,18 @@ import torch.utils.data.distributed
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import torchvision.models as models
-from utils_FKD import RandomResizedCrop_FKD, RandomHorizontalFlip_FKD, ImageFolder_FKD, Compose_FKD, Soft_CrossEntropy, Recover_soft_label
 from torchvision.transforms import InterpolationMode
+
+from utils_FKD import RandomResizedCrop_FKD, RandomHorizontalFlip_FKD
+from utils_FKD import ImageFolder_FKD, Compose_FKD
+from utils_FKD import Soft_CrossEntropy, Recover_soft_label
 
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
     and callable(models.__dict__[name]))
 
-parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
+parser = argparse.ArgumentParser(description='PyTorch ImageNet Training with FKD Scheme')
 parser.add_argument('data', metavar='DIR',
                     help='path to dataset')
 parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet50',
@@ -85,6 +88,8 @@ parser.add_argument('--num_crops', default=4, type=int,
                     help='number of crops in each image, 1 is the standard training')
 parser.add_argument('--softlabel_path', default='./soft_label', type=str, metavar='PATH',
                     help='path to soft label files (default: none)')
+parser.add_argument("--temp", type=float, default=1.0,
+                    help="temperature on student during training (defautl: 1.0)")
 parser.add_argument('--cos', action='store_true',
                     help='use cosine lr schedule')
 parser.add_argument('--save_checkpoint_path', default='./FKD_checkpoints_output', type=str, metavar='PATH',
@@ -380,7 +385,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
         # compute output
         output = model(images)
-        loss = criterion(output, soft_label)
+        loss = criterion(output / args.temp, soft_label)
 
         # measure accuracy and record loss
         acc1, acc5 = accuracy(output, target, topk=(1, 5))

@@ -19,6 +19,7 @@ FKD flags:
 - `--num_seg `: true number of batch-size on GPUs during generating. Make sure `--num_crops` is divisible by `--num_seg`. Default: 50.
 - `--label_type `: type of generated soft labels. Default: `marginal_smoothing_k5`.
 - `--use_fp16`: save soft labels as `fp16` to decrease storage. Default: `False`.
+- `--temp`: temperature on soft label. Default: `1.0`.
 
 Path flags:
 
@@ -30,7 +31,7 @@ Model flags:
 
 - `--arch `: specify which model to use as the teacher network.
 - `--input_size `: input size of teacher network.
-- `--teacher_source	`: source of teachers. Currently, it supports models from (1) `pytorch`; (2) `timm`; and (3) private pre-trained models.
+- `--teacher_source `: source of teachers. Currently, it supports models from (1) `pytorch`; (2) `timm`; and (3) private pre-trained models.
 
 Some important notes:
 

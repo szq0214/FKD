@@ -71,6 +71,8 @@ parser.add_argument("--min_scale_crops", type=float, default=0.08,
                     help="argument in RandomResizedCrop")
 parser.add_argument("--max_scale_crops", type=float, default=0.936,
                     help="argument in RandomResizedCrop")
+parser.add_argument("--temp", type=float, default=1.0,
+                    help="temperature on soft label")
 parser.add_argument('--save_path', default='./FKD_effL2_475_soft_label', type=str, metavar='PATH',
                     help='path to save soft labels')
 parser.add_argument('--reference_path', default=None, type=str, metavar='PATH',
@@ -291,7 +293,7 @@ def generate_soft_labels(train_loader, model, args):
                     # compute output
                     output = model(images[k])
 
-                    output = nn.functional.softmax(output, dim=1)
+                    output = nn.functional.softmax(output / args.temp, dim=1)
                     images[k] = images[k].detach()#.cpu()
                     output = output.detach().cpu()
 
@@ -301,7 +303,7 @@ def generate_soft_labels(train_loader, model, args):
                     torch.save(state, new_filename)
                 else:
                     output_all = []
-                    for split in range(int(args.num_crops/args.num_seg)):
+                    for split in range(int(args.num_crops / args.num_seg)):
                         if args.gpu is not None:
                             images[k][split*args.num_seg:(split+1)*args.num_seg] = images[k][split*args.num_seg:(split+1)*args.num_seg].cuda(args.gpu, non_blocking=True)
                         if torch.cuda.is_available():
@@ -310,7 +312,7 @@ def generate_soft_labels(train_loader, model, args):
                         # compute output
                         output = model(images[k][split*args.num_seg:(split+1)*args.num_seg])
 
-                        output = nn.functional.softmax(output, dim=1)
+                        output = nn.functional.softmax(output / args.temp, dim=1)
                         images[k][split*args.num_seg:(split+1)*args.num_seg] = images[k][split*args.num_seg:(split+1)*args.num_seg].detach()#.cpu()
                         output = output.detach().cpu()
                         output_all.append(output)
