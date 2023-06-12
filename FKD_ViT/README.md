@@ -17,12 +17,12 @@ python train_ViT_FKD.py \
 --multiprocessing-distributed --world-size 1 --rank 0 \
 -a SReT_LT --lr 0.002 --wd 0.05 \
 --num_crops 4 -b 1024 --cos \
---temp 1.0 \
+--temp 1.0 --mixup_cutmix \
 --softlabel_path [soft label path, e.g., ./FKD_soft_label_500_crops_marginal_smoothing_k_5/imagenet] \
 [imagenet-folder with train and val folders]
 ```
 
-For the instructions of `SReT_LT` model, please refer to [SReT](https://github.com/szq0214/SReT) for details.
+Add `--mixup_cutmix` to enable Mixup and Cutmix augmentations. For the instructions of `SReT_LT` model, please refer to [SReT](https://github.com/szq0214/SReT) for details.
 
 ## Evaluation
 

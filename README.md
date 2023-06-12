@@ -49,7 +49,7 @@ To train a model, run `train_FKD.py` with the desired model architecture and the
 python train_FKD.py -a resnet50 --lr 0.1 --num_crops 4 -b 1024 --cos --temp 1.0 --softlabel_path [soft label path] [imagenet-folder with train and val folders]
 ```
 
-For `--softlabel_path`, use format as `./FKD_soft_label_500_crops_marginal_smoothing_k_5/imagenet`.
+Add `--mixup_cutmix` to enable Mixup and Cutmix augmentations. For `--softlabel_path`, use format as `./FKD_soft_label_500_crops_marginal_smoothing_k_5/imagenet`.
 
 Multi-processing distributed training on a single node with multiple GPUs:
 
@@ -129,7 +129,6 @@ python -u train_ViT_FKD.py \
 --soft_label_type marginal_smoothing_k5  \
 --softlabel_path [soft label path] \
 [imagenet-folder with train and val folders]
-
 ```
 
 ### FKD Training on ViT/DeiT and SReT

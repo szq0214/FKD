@@ -25,6 +25,7 @@ from torchvision.transforms import InterpolationMode
 from utils_FKD import RandomResizedCrop_FKD, RandomHorizontalFlip_FKD
 from utils_FKD import ImageFolder_FKD, Compose_FKD
 from utils_FKD import Soft_CrossEntropy, Recover_soft_label
+from utils_FKD import mixup_cutmix
 
 import timm
 from timm.scheduler import create_scheduler
@@ -135,6 +136,18 @@ parser.add_argument('--patience-epochs', type=int, default=10, metavar='N',
                     help='patience epochs for Plateau LR scheduler (default: 10')
 parser.add_argument('--decay-rate', '--dr', type=float, default=0.1, metavar='RATE',
                     help='LR decay rate (default: 0.1)')
+
+# mixup and cutmix parameters
+parser.add_argument('--mixup_cutmix', default=False, action='store_true',
+                    help='use mixup and cutmix data augmentation')
+parser.add_argument('--mixup', type=float, default=0.8,
+                    help='mixup alpha, mixup enabled if > 0. (default: 0.8)')
+parser.add_argument('--cutmix', type=float, default=1.0,
+                    help='cutmix alpha, cutmix enabled if > 0. (default: 1.0)')
+parser.add_argument('--mixup_cutmix_prob', type=float, default=1.0,
+                    help='Probability of performing mixup or cutmix when either/both is enabled')
+parser.add_argument('--mixup_switch_prob', type=float, default=0.5,
+                    help='Probability of switching to cutmix when both mixup and cutmix enabled. Mixup only: set to 1.0, Cutmix only: set to 0.0')
 
 best_acc1 = 0
 
@@ -446,6 +459,9 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         if torch.cuda.is_available():
             target = target.cuda(args.gpu, non_blocking=True)
             soft_label = soft_label.cuda(args.gpu, non_blocking=True)
+
+        if args.mixup_cutmix:
+            images, soft_label = mixup_cutmix(images, soft_label, args)
 
         # compute output
         output = model(images)
