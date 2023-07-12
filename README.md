@@ -1,6 +1,5 @@
 ## 🚀 FKD: A Fast Knowledge Distillation Framework for Visual Recognition
 
-
 Official PyTorch implementation of paper [**A Fast Knowledge Distillation Framework for Visual Recognition**](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf) (ECCV 2022, [ECCV paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf), [arXiv](https://arxiv.org/abs/2112.01528)), Zhiqiang Shen and Eric Xing.
 
 
@@ -24,6 +23,7 @@ Knowledge Distillation (KD) has been recognized as a useful tool in many visual 
 	}
 
 ## What's New
+* Please refer to our work [here](https://github.com/VILA-Lab/SRe2L/tree/main/relabel#make-fkd-compatible-with-mixup-and-cutmix) if you would like to utilize mixture-based data augmentations (Mixup, CutMix, etc.) during the soft label generation and model training.
 * Includes [code of soft label generation](FKD_SLG) for customization. We will also set up a [soft label zoo and baselines](FKD_SLG) with multiple soft labels from various teachers. 
 * FKD with AdamW on ResNet-50 achieves **80.5%** using a plain training scheme. Pre-trained model is available [here](https://drive.google.com/file/d/14HgpE-9SMOFUN3cb7gT9OjURqq7s7q2_/view?usp=sharing).
 
