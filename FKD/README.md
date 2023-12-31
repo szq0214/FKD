@@ -4,7 +4,7 @@ Official PyTorch implementation of paper [**A Fast Knowledge Distillation Framew
 
 
 <div align=center>
-<img width=60% src="FKD.png"/>
+<img width=55% src="FKD.png"/>
 </div>
 
 ### Abstract
@@ -90,13 +90,13 @@ The training speed of each epoch is tested on HPC/CIAI cluster at MBZUAI with 8 
 | Method |  Network  | accuracy (Top-1)  |weights  |configurations |
 |:-------:|:--------:|:--------:|:--------:|:--------:|
 | [`ReLabel`](https://github.com/naver-ai/relabel_imagenet) | ResNet-50 | 78.9 | -- |  -- |
-| `FKD`| ResNet-50 | &emsp; &emsp; &emsp; &emsp;  **80.1<sup>+1.2%</sup>** | [link](https://drive.google.com/file/d/1qQK3kae4pXBZOldegnZqw7j_aJWtbPgV/view?usp=sharing) | same as ReLabel while initial lr = 0.1 $\times$ $batch size \over 512$ |
+| `FKD`| ResNet-50 | &emsp; &emsp;   **80.1<sup>+1.2%</sup>** | [link](https://drive.google.com/file/d/1qQK3kae4pXBZOldegnZqw7j_aJWtbPgV/view?usp=sharing) | same as ReLabel while initial lr = 0.1 $\times$ $batch size \over 512$ |
 | | | |
 | `FKD`<sub>(Plain)</sub>| ResNet-50 |  **79.8** | [link](https://drive.google.com/file/d/1s6Tx5xmXnAseMZJBwaa4bnuvzZZGjMdk/view?usp=sharing) |  [Table 12 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)<br><sub>(w/o warmup&colorJ )</sub>  |
 | `FKD`<sub>(AdamW)</sub> | ResNet-50 | **80.5** | [link](https://drive.google.com/file/d/14HgpE-9SMOFUN3cb7gT9OjURqq7s7q2_/view?usp=sharing) |  [Table 13 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)<br><sub>(same as our settings on ViT and SReT)</sub> |
 | | | |
 | [`ReLabel`](https://github.com/naver-ai/relabel_imagenet) | ResNet-101 | 80.7  | -- |  -- | 
-| `FKD` | ResNet-101 | &emsp; &emsp; &emsp; &emsp; **81.9<sup>+1.2%</sup>** | [link](TBA) |  [Table 12 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)  |
+| `FKD` | ResNet-101 | &emsp; &emsp; **81.9<sup>+1.2%</sup>** | [link](TBA) |  [Table 12 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)  |
 | | | |
 | `FKD`<sub>(Plain)</sub>| ResNet-101 | **81.7**  | [link](https://drive.google.com/file/d/13bVpHpTykCaYYXIAbWHa2W2C2tSxZlW5/view?usp=sharing) |  [Table 12 in paper](http://zhiqiangshen.com/projects/FKD/FKD_camera-ready.pdf)<br><sub>(w/o warmup&colorJ )</sub>  |  
 
@@ -105,10 +105,10 @@ The training speed of each epoch is tested on HPC/CIAI cluster at MBZUAI with 8 
 | Method |  Network  | FLOPs | accuracy (Top-1)  |weights  |
 |:-------:|:--------:|:--------:|:--------:|:--------:|
 | [`FBNet`](https://arxiv.org/abs/1812.03443)| FBNet-c100 | 375M | 75.12% | -- | 
-| `FKD`| FBNet-c100 | 375M | &emsp; &emsp; &emsp; &emsp; &ensp;  **77.13%<sup>+2.01%</sup>** | [link](https://drive.google.com/file/d/1s2pnIedXgwYAPpY2GBT3OC24ZP-0vfWe/view?usp=sharing) |  
+| `FKD`| FBNet-c100 | 375M | &emsp; &emsp;  **77.13%<sup>+2.01%</sup>** | [link](https://drive.google.com/file/d/1s2pnIedXgwYAPpY2GBT3OC24ZP-0vfWe/view?usp=sharing) |  
 | | | |
 | [`EfficientNetv2`](https://arxiv.org/abs/2104.00298)| EfficientNetv2-B0 | 700M | 78.35% | -- | 
-| `FKD`| EfficientNetv2-B0 | 700M | &emsp; &emsp; &emsp; &emsp; &ensp;  **79.94%<sup>+1.59%</sup>** | [link](https://drive.google.com/file/d/1qL21XOnTRWt6CvZLvUY5IpULISESEfZm/view?usp=sharing) |  
+| `FKD`| EfficientNetv2-B0 | 700M | &emsp; &emsp;   **79.94%<sup>+1.59%</sup>** | [link](https://drive.google.com/file/d/1qL21XOnTRWt6CvZLvUY5IpULISESEfZm/view?usp=sharing) |  
 
 The training protocol is the same as we used for ViT/SReT:
 

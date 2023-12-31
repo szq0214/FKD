@@ -5,7 +5,7 @@
 > [**FerKD**](./FerKD) (```@ICCV'23```): **FerKD: Surgical Label Adaptation for Efficient Distillation**
 
 <div align=center>
-<img width=60% src="./FerKD/FerKD.png"/>
+<img width=60% src="./FerKD/assets/FerKD.png"/>
 </div>
 
 
@@ -14,7 +14,7 @@
 > [**FKD**](./FKD) (```@ECCV'22```): **A Fast Knowledge Distillation Framework for Visual Recognition**
 
 <div align=center>
-<img width=60% src="./FKD/FKD.png"/>
+<img width=55% src="./FKD/FKD.png"/>
 </div>
 
 
