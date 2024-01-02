@@ -34,7 +34,7 @@ Please check the [soft labels](./soft_label_zoo) generated from different giant 
 
 ## Training
 
-FerKD follows [FKD](https://github.com/szq0214/FKD/tree/main/FKD) traininig code and procedure while using different preprocessed soft labels, please download the soft label for FerKD at [link](./soft_label_zoo).
+FerKD follows [FKD](https://github.com/szq0214/FKD/tree/main/FKD) training code and procedure while using different preprocessed soft labels, please download the soft label for FerKD at [link](./soft_label_zoo).
 
 ## Trained Models
 
